@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace Controle.Controllers
 {
@@ -12,13 +13,14 @@ namespace Controle.Controllers
 
         public ActionResult Index()
         {
-            if (Session["usuarioLogadoID"] != null)
+
+            if (Session["Nome"] != null)
             {
                 return View();
             }
             else
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("About");
             }
         }
 
@@ -29,38 +31,89 @@ namespace Controle.Controllers
             return View();
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
 
-            return View();
+
+        /// <param name="returnURL"></param>
+        /// <returns></returns>
+        public ActionResult Login(string returnURL)
+        {
+            /*Recebe a url que o usuário tentou acessar*/
+            ViewBag.ReturnUrl = returnURL;
+            return View(new Usuario());
         }
 
-        public ActionResult Login()
-        {
-            return View();
-        }
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [OutputCache(NoStore = true, Duration = 0)]
-        public ActionResult Login(Usuario u)
+        public ActionResult Login(Usuario login, string returnUrl)
         {
-            // esta action trata o post (login)
-            if (ModelState.IsValid) //verifica se é válido
+            if (ModelState.IsValid)
             {
-                using (ControleEntities dc = new ControleEntities())
+                using (ControleEntities db = new ControleEntities())
                 {
-                    var v = dc.Usuario.Where(a => a.Email.Equals(u.Email) && a.Senha.Equals(u.Senha)).FirstOrDefault();
-                    if (v != null)
+                    var vLogin = db.Usuario.Where(p => p.Email.Equals(login.Email)).FirstOrDefault();
+                    /*Verificar se a variavel vLogin está vazia. 
+                    Isso pode ocorrer caso o usuário não existe. 
+              Caso não exista ele vai cair na condição else.*/
+                    if (vLogin != null)
                     {
-                        Session["usuarioLogadoID"] = v.Id.ToString();
-                        Session["Email"] = v.Email.ToString();
-                        return RedirectToAction("Index");
+                        /*Código abaixo verifica se o usuário que retornou na variavel tem está 
+                          ativo. Caso não esteja cai direto no else*/
+                        if (Equals(vLogin.Bl_Ativo, "s"))
+                        {
+                            /*Código abaixo verifica se a senha digitada no site é igual a 
+                            senha que está sendo retornada 
+                             do banco. Caso não cai direto no else*/
+                            if (Equals(vLogin.Senha, login.Senha))
+                            {
+                                FormsAuthentication.SetAuthCookie(vLogin.Email, false);
+                                if (Url.IsLocalUrl(returnUrl)
+                                && returnUrl.Length > 1
+                                && returnUrl.StartsWith("/")
+                                && !returnUrl.StartsWith("//")
+                                && returnUrl.StartsWith("/\\"))
+                                {
+                                    return Redirect(returnUrl);
+                                }
+                                /*código abaixo cria uma session para armazenar o nome do usuário*/
+                                Session["Nome"] = vLogin.Nome;
+                                /*código abaixo cria uma session para armazenar o sobrenome do usuário*/
+                                Session["Sobrenome"] = vLogin.Perfil;
+                                /*retorna para a tela inicial do Home*/
+                                return RedirectToAction("Index", "Home");
+                            }
+                            /*Else responsável da validação da senha*/
+                            else
+                            {
+                                /*Escreve na tela a mensagem de erro informada*/
+                                ModelState.AddModelError("", "Senha informada Inválida!!!");
+                                /*Retorna a tela de login*/
+                                return View(new Usuario());
+                            }
+                        }
+                        /*Else responsável por verificar se o usuário está ativo*/
+                        else
+                        {
+                            /*Escreve na tela a mensagem de erro informada*/
+                            ModelState.AddModelError("", "Usuário sem acesso para usar o sistema!!!");
+                            /*Retorna a tela de login*/
+                            return View(new Usuario());
+                        }
+                    }
+                    /*Else responsável por verificar se o usuário existe*/
+                    else
+                    {
+                        /*Escreve na tela a mensagem de erro informada*/
+                        ModelState.AddModelError("", "E-mail informado inválido!!!");
+                        /*Retorna a tela de login*/
+                        return View(new Usuario());
                     }
                 }
             }
-            
-            return View(u);
+            /*Caso os campos não esteja de acordo com a solicitação retorna a tela de login 
+            com as mensagem dos campos*/
+            return View(login);
         }
+
     }
 }
