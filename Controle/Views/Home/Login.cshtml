@@ -1,41 +1,69 @@
-﻿
-@model Controle.Models.Usuario
-@{
-    ViewBag.Title = "Login";
-}
-<h2>Login</h2>
+﻿@model Controle.Models.Usuario
 
-@using (Html.BeginForm("Login", "Home", FormMethod.Post))
+@{
+    Layout = null;
+}
+
+<link href="~/Content/bootstrap-darkly.css" rel="stylesheet" />
+
+
+<script src="~/scripts/jquery-1.10.2.js"></script>
+<script src="~/scripts/bootstrap.min.js"></script>
+
+@using (Html.BeginForm("Login", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post,
+new { @class = "form-horizontal" }))
 {
-    //cria a tag do formulário
-    @Html.AntiForgeryToken() // previne o ataque CSRF
-    @Html.ValidationSummary(true)
-    if (@ViewBag.Message != null)
-    {
-        <div style="border:1px solid red">
-            @ViewBag.Message
+    @Html.AntiForgeryToken();
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="container">
+        <div class="form-login">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title"><h1 class="glyphicon-alert" style="color:aquamarine" >Login do Sistema</h1></div>
+                </div>
+
+                <div style="padding-top:30px" class="panel-body">
+                    <div style="display:none" id="result" class="alert
+                    alert-danger col-sm-12">
+
+                    </div>
+
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon" style="color:aquamarine">
+                            <i class="glyphicon-text-color" ></i>
+                        </span>
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes =
+                        new { @class = "form-control input-lg", placeholder =
+                        "E-mail", autofocus = true } }) 
+                        @Html.ValidationMessageFor(model => model.Email, "",
+                        new { @class = "text-danger" })
+                    </div>
+
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon">
+                            <i class="glyphicon-text-color" style="color:aquamarine" ></i>
+                        </span>
+                        @Html.PasswordFor(model => model.Senha, new { htmlAttributes
+                        = new { @class = "form-control input-lg", placeholder = "Senha" } })
+                        @Html.ValidationMessageFor(model => model.Senha, "",
+                        new { @class = "text-danger" })
+                    </div>
+
+                    <div style="margin-top:10px" class="form-group">
+
+                        <div class="col-sm-12 controls">
+                            <input type="submit" value="Logar"
+                                   class="btn primary btn-lg" />
+
+                        </div>
+                        
+                    </div>
+
+                </div>
+            </div>
         </div>
-    }
-    <table>
-        <tr>
-            <td>@Html.LabelFor(a => a.Email)</td>
-            <td>@Html.TextBoxFor(a => a.Email)</td>
-            <td>@Html.ValidationMessageFor(a => a.Email)</td>
-        </tr>
-        <tr>
-            <td> @Html.LabelFor(a => a.Senha)</td>
-            <td> @Html.PasswordFor(a => a.Senha) </td>
-            <td> @Html.ValidationMessageFor(a => a.Senha) </td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>
-                <input type="submit" value="Login" />
-            </td>
-            <td></td>
-        </tr>
-    </table>
+    </div>
 }
-@section Scripts{
-    @Scripts.Render("~/bundles/jqueryval")
-}
+

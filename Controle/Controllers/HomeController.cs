@@ -42,6 +42,7 @@ namespace Controle.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Login(Usuario u)
         {
             // esta action trata o post (login)
