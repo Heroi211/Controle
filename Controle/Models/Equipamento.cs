@@ -11,16 +11,54 @@ namespace Controle.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public partial class Equipamento
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public byte Id { get; set; }
+
+        [Required(ErrorMessage = "The name is required")]
+        [Display(Name = "Nome")]
+        [StringLength(20, MinimumLength = 3)]
         public string Nome { get; set; }
+
+        [Required(ErrorMessage = "The tipe is required")]
+        [Display(Name = "Tipo")]
         public string Tipo { get; set; }
+
+        [Required(ErrorMessage = "The tipe is required")]
+        [Display(Name = "Modelo")]
         public string Modelo { get; set; }
+
+        [Required(ErrorMessage = "The license of SO is required")]
+        [Display(Name = "Licensa de SO")]
         public string LicensaSO { get; set; }
+
+        [Required(ErrorMessage = "The license of office is required")]
+        [Display(Name = "Licensa de Office")]
         public string LicensaOFF { get; set; }
+
         public System.DateTime RegData { get; set; }
+
+        [Display(Name = "Descrição")]
+        [DataType(DataType.MultilineText)]
         public string Descricao { get; set; }
+
+        
+
+        public enum Tipagem
+        {
+            Notebook,
+            Desktop,
+            Tablet,
+            Coletor,
+            Ipad,
+            Celular,
+
+            
+        }
     }
 }

@@ -6,34 +6,34 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
+<p class="btn secondary btn-lg" style="color:bisque">
+     @Html.ActionLink("Criar novo", "Create")  
 </p>
-<table class="table">
+<table class="table table-bordered" >
     <tr>
-        <th>
+        <th class="warning" style="color:black">
             @Html.DisplayNameFor(model => model.Nome)
         </th>
-        <th>
+        <th class="warning" style="color:black">
             @Html.DisplayNameFor(model => model.Senha)
         </th>
-        <th>
+        <th class="warning" style="color:black">
             @Html.DisplayNameFor(model => model.Email)
         </th>
-        <th>
+        <th class="warning" style="color:black">
             @Html.DisplayNameFor(model => model.Perfil)
         </th>
-        <th>
+        <th class="warning" style="color:black">
             @Html.DisplayNameFor(model => model.Bl_Ativo)
         </th>
-        <th>
+        <th class="warning" style="color:black">
             @Html.DisplayNameFor(model => model.RegData)
         </th>
-        <th></th>
+        <th class="warning"></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
+    <tr class="active" style="color:bisque">
         <td>
             @Html.DisplayFor(modelItem => item.Nome)
         </td>
@@ -52,7 +52,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.RegData)
         </td>
-        <td>
+        <td class="btn bg-secondary btn-lg" style="color:black">
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })

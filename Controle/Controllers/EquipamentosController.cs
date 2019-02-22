@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using Controle.Models;
+
 
 namespace Controle.Controllers
 {
@@ -41,6 +43,7 @@ namespace Controle.Controllers
         
         public ActionResult Create()
         {
+            
             return View();
         }
 
@@ -89,6 +92,7 @@ namespace Controle.Controllers
         {
             if (ModelState.IsValid)
             {
+                equipamento.RegData = DateTime.Now;
                 db.Entry(equipamento).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

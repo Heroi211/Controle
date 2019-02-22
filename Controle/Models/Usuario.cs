@@ -11,15 +11,43 @@ namespace Controle.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public partial class Usuario
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public byte Id { get; set; }
+
         public string Nome { get; set; }
+
+        [DataType(DataType.Password)]
         public string Senha { get; set; }
+
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
+
+        [Display(Name = "Perfil")]
         public string Perfil { get; set; }
+
+        [Display(Name = "Bloqueio Ativo")]
         public string Bl_Ativo { get; set; }
+
+
         public System.DateTime RegData { get; set; }
+
+        public enum GetPerfil
+        {
+            admin,
+            user
+        }
+
+        public enum bloqueioAtivo
+        {
+            s,
+            n
+        }
+
     }
 }

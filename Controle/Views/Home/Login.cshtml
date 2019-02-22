@@ -45,7 +45,7 @@ new { @class = "form-horizontal" }))
                         <span class="input-group-addon">
                             <i class="glyphicon-text-color" style="color:aquamarine" ></i>
                         </span>
-                        @Html.PasswordFor(model => model.Senha, new { htmlAttributes
+                        @Html.EditorFor(model => model.Senha, new { htmlAttributes
                         = new { @class = "form-control input-lg", placeholder = "Senha" } })
                         @Html.ValidationMessageFor(model => model.Senha, "",
                         new { @class = "text-danger" })

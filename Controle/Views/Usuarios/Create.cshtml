@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2 style="color:black"><strong>Create</strong></h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Usuario</h4>
+        <h2 style="color:black"><strong>Usuario</strong></h2>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -42,7 +42,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Perfil, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Perfil, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.Perfil,
+                     new SelectList(Enum.GetValues(typeof(Controle.Models.Usuario.GetPerfil))),
+                     "Select Type")
                 @Html.ValidationMessageFor(model => model.Perfil, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -50,18 +52,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Bl_Ativo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Bl_Ativo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.Bl_Ativo,
+                      new SelectList(Enum.GetValues(typeof(Controle.Models.Usuario.GetPerfil))),
+                      "Select Type")
                 @Html.ValidationMessageFor(model => model.Bl_Ativo, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.RegData, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RegData, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RegData, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -71,8 +68,8 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<div class="btn bg-secondary btn-lg">
+    @Html.ActionLink("Voltar", "Index")
 </div>
 
 @section Scripts {

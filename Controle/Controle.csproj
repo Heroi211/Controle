@@ -195,6 +195,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Folha1.css" />
+    <Content Include="Content\Images\download.jpg" />
+    <Content Include="Content\Images\download.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
