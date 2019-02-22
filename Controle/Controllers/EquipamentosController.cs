@@ -15,12 +15,14 @@ namespace Controle.Controllers
         private ControleEntities db = new ControleEntities();
 
         // GET: Equipamentos
+        
         public ActionResult Index()
         {
             return View(db.Equipamento.ToList());
         }
 
         // GET: Equipamentos/Details/5
+       
         public ActionResult Details(byte? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace Controle.Controllers
         }
 
         // GET: Equipamentos/Create
+        
         public ActionResult Create()
         {
             return View();
@@ -46,10 +49,13 @@ namespace Controle.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        
+        
         public ActionResult Create([Bind(Include = "Id,Nome,Tipo,Modelo,LicensaSO,LicensaOFF,RegData,Descricao")] Equipamento equipamento)
         {
             if (ModelState.IsValid)
             {
+                equipamento.RegData = DateTime.Now;
                 db.Equipamento.Add(equipamento);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -78,6 +84,7 @@ namespace Controle.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public ActionResult Edit([Bind(Include = "Id,Nome,Tipo,Modelo,LicensaSO,LicensaOFF,RegData,Descricao")] Equipamento equipamento)
         {
             if (ModelState.IsValid)
@@ -107,6 +114,7 @@ namespace Controle.Controllers
         // POST: Equipamentos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public ActionResult DeleteConfirmed(byte id)
         {
             Equipamento equipamento = db.Equipamento.Find(id);

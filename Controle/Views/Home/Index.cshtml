@@ -3,9 +3,24 @@
 }
 
 <div class="jumbotron">
-    
+
     <h1 style="color: aquamarine" class="glyphicon-text-color"> Controle - SIP </h1>
-    
-    <p class="lead" style="color: bisque"  > Meu sistema </p>
+
+    <div class="container" style="text-align:center">
+        <div class="row" style="margin-top:10px">
+            <h2>DEVMEDIA</h2>
+            @if (Session["Nome"] != null)
+            {
+                <p>
+                    <h3 style="color: aquamarine" >Bem vindo ao sistema</h3> <h4 style="color:bisque">
+                        @Session["Nome"].ToString()  @Session["Sobrenome"].ToString()
+                    </h4>
+                </p>
+                
+            }
+        </div>
+    </div>
+
+    <p class="lead" style="color: bisque"> Meu sistema </p>
     <p><a href="@Url.Action("Login","Home")" class="btn btn-primary btn-lg">Voltar</a></p>
 </div>
