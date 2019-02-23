@@ -1,5 +1,6 @@
 ﻿using Controle.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,10 +10,10 @@ using System.Web.Security;
 
 namespace Controle.Controllers
 {
-    [Authorize(Roles = "admin, user")]
+    
     public class HomeController : Controller
     {
-
+        [Authorize(Roles = "admin, user")]
         public ActionResult Index()
         {
 
@@ -40,9 +41,19 @@ namespace Controle.Controllers
         /// <returns></returns>
         public ActionResult Login(string returnURL)
         {
-            /*Recebe a url que o usuário tentou acessar*/
-            ViewBag.ReturnUrl = returnURL;
-            return View(new Usuario());
+
+            if (Session["Nome"] == null)
+            {
+                /*Recebe a url que o usuário tentou acessar*/
+                ViewBag.ReturnUrl = returnURL;
+                return View(new Usuario());
+            }
+            else
+            {
+                return RedirectToAction("ErrorLogin", "Home");
+            }
+            
+            
         }
 
       
@@ -81,7 +92,10 @@ namespace Controle.Controllers
                                 /*código abaixo cria uma session para armazenar o nome do usuário*/
                                 Session["Nome"] = vLogin.Nome;
                                 /*código abaixo cria uma session para armazenar o sobrenome do usuário*/
-                                Session["Sobrenome"] = vLogin.Perfil;
+                                Session["Perfil"] = vLogin.Perfil;
+                                Session["Email"] = vLogin.Email;
+                                Session["Registro"] = vLogin.RegData;
+                                Session["Id"] = vLogin.Id;
                                 /*retorna para a tela inicial do Home*/
                                 return RedirectToAction("Index", "Home");
                             }
@@ -117,6 +131,16 @@ namespace Controle.Controllers
             com as mensagem dos campos*/
             return View(login);
         }
+
+        
+        public ActionResult LogOut()
+        {
+            
+            FormsAuthentication.SignOut();
+            Session.Abandon(); // it will clear the session at the end of request
+            return RedirectToAction("Login", "Home");
+        }
+
 
     }
 }

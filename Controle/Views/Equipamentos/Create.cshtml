@@ -12,21 +12,21 @@
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h2 style="color:black"><strong>Equipamento</strong></h2>
+    <h2 style="color:gold"><strong>Equipamento</strong></h2>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
+    <div class="form-group" style="color:gold">
         @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-10" style="color:black">
             @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" style="color:gold">
 
         @Html.LabelFor(model => model.Tipo, htmlAttributes: new { @class = "control-label col-md-2"  })
-        <div class="col-md-10">
+        <div class="col-md-10" style="color:black">
             @Html.DropDownListFor(model => model.Tipo,
                      new SelectList(Enum.GetValues(typeof(Controle.Models.Equipamento.Tipagem))),
                      "Select Type")
@@ -34,49 +34,47 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" style="color:gold">
         @Html.LabelFor(model => model.Modelo, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-10" style="color:black">
             @Html.EditorFor(model => model.Modelo, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Modelo, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" style="color:gold">
         @Html.LabelFor(model => model.LicensaSO, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-10" style="color:black">
             @Html.EditorFor(model => model.LicensaSO, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.LicensaSO, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" style="color:gold">
         @Html.LabelFor(model => model.LicensaOFF, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="col-md-10" style="color:black">
             @Html.EditorFor(model => model.LicensaOFF, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.LicensaOFF, "", new { @class = "text-danger" })
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" style="color:gold">
         @Html.LabelFor(model => model.Descricao, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="col-md-10" style="color:black"> 
+            @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Criar novo" class="btn primary btn-lg" style="color:black" autofocus />
         </div>
     </div>
 </div>
 }
 
-<div class="btn bg-secondary btn-lg">
-    @Html.ActionLink("Voltar", "Index")
-</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

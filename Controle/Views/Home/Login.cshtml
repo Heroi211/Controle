@@ -21,49 +21,52 @@ new { @class = "form-horizontal" }))
         <div class="form-login">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <div class="panel-title"><h1 class="glyphicon-alert" style="color:aquamarine" >Login do Sistema</h1></div>
+                    <div class="text-info" style="padding-bottom: 15px"><h1 style="color:gold"><img src="~/Content/Images/login.jpg" alt="" height="60px" width="60px" /> Login do Sistema</h1></div>
                 </div>
 
                 <div style="padding-top:30px" class="panel-body">
-                    <div style="display:none" id="result" class="alert
-                    alert-danger col-sm-12">
+                    <div style="display:none" id="result" class="alert alert-danger col-sm-12">
 
                     </div>
 
+
                     <div style="margin-bottom: 25px" class="input-group">
-                        <span class="input-group-addon" style="color:aquamarine">
-                            <i class="glyphicon-text-color" ></i>
+                        <span class="input-group-addon">
+                            <img src="~/Content/Images/userlogin.jpg" alt="" width="45px" height="45px" />
                         </span>
                         @Html.EditorFor(model => model.Email, new { htmlAttributes =
                         new { @class = "form-control input-lg", placeholder =
-                        "E-mail", autofocus = true } }) 
+                        "E-mail", autofocus = true } })
                         @Html.ValidationMessageFor(model => model.Email, "",
                         new { @class = "text-danger" })
                     </div>
 
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon">
-                            <i class="glyphicon-text-color" style="color:aquamarine" ></i>
+                            <img src="~/Content/Images/password.jpg" alt="" width="45px" height="45px" />
                         </span>
                         @Html.EditorFor(model => model.Senha, new { htmlAttributes
                         = new { @class = "form-control input-lg", placeholder = "Senha" } })
                         @Html.ValidationMessageFor(model => model.Senha, "",
                         new { @class = "text-danger" })
                     </div>
-
                     <div style="margin-top:10px" class="form-group">
 
                         <div class="col-sm-12 controls">
-                            <input type="submit" value="Logar"
-                                   class="btn primary btn-lg" />
+
+                            <input style="border-bottom:5px groove blanchedalmond" type="submit" value="Login" class="btn primary btn-lg" />
 
                         </div>
-                        
                     </div>
+
+
+
+
 
                 </div>
             </div>
         </div>
     </div>
 }
+
 

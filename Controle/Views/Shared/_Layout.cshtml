@@ -7,7 +7,7 @@
 
     <title>@ViewBag.Title - Controle</title>
     <link href="~/Content/bootstrap-darkly.css" rel="stylesheet" />
-    <link href="~/Content/Folha1.css" rel="stylesheet" />
+    <link href="~/Content/Layout3Colunas.css" rel="stylesheet" />
 
 
 
@@ -40,7 +40,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a  href="#" class="dropdown-toggle" data-toggle="dropdown">
                             Exibir
                             <span class="caret"></span>
                         </a>
@@ -53,17 +53,16 @@
 
 
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Sobre", "About", "Home")</li>
-                </ul>
+                
             </div>
         </div>
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now - By Gabriel Drumond</p>
+        <footer class="footer navbar-fixed-bottom">
+            <hr />
+            <a href="@Url.Action("LogOut","Home")" class="btn bg-secondary btn-info">Sair</a>
+            <p>&copy; @DateTime.Now - By Heroi</p>
         </footer>
     </div>
 
