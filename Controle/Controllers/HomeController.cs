@@ -9,7 +9,7 @@ using System.Web.Security;
 
 namespace Controle.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin, user")]
     public class HomeController : Controller
     {
 
@@ -22,13 +22,14 @@ namespace Controle.Controllers
             }
             else
             {
-                return RedirectToAction("About");
+                
+                return RedirectToAction("ErrorLogin");
             }
         }
 
-        public ActionResult About()
+        public ActionResult ErrorLogin()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Você precisa estar logado para executar esta ação";
 
             return View();
         }

@@ -12,6 +12,7 @@ using Controle.Models;
 
 namespace Controle.Controllers
 {
+    [Authorize(Roles = "user, admin")]
     public class EquipamentosController : Controller
     {
         private ControleEntities db = new ControleEntities();
@@ -20,11 +21,21 @@ namespace Controle.Controllers
         
         public ActionResult Index()
         {
-            return View(db.Equipamento.ToList());
+
+            if (Session["Nome"] != null)
+            {
+                return View(db.Equipamento.ToList());
+            }
+            else
+            {
+
+                return RedirectToAction("ErrorLogin", "Home");
+            }
+            
         }
 
         // GET: Equipamentos/Details/5
-       
+        
         public ActionResult Details(byte? id)
         {
             if (id == null)
@@ -43,8 +54,16 @@ namespace Controle.Controllers
         
         public ActionResult Create()
         {
-            
-            return View();
+
+            if (Session["Nome"] != null)
+            {
+                return View();
+            }
+            else
+            {
+
+                return RedirectToAction("ErrorLogin", "Home");
+            }
         }
 
         // POST: Equipamentos/Create
@@ -52,7 +71,7 @@ namespace Controle.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        
+
         
         public ActionResult Create([Bind(Include = "Id,Nome,Tipo,Modelo,LicensaSO,LicensaOFF,RegData,Descricao")] Equipamento equipamento)
         {
@@ -87,7 +106,6 @@ namespace Controle.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
         public ActionResult Edit([Bind(Include = "Id,Nome,Tipo,Modelo,LicensaSO,LicensaOFF,RegData,Descricao")] Equipamento equipamento)
         {
             if (ModelState.IsValid)
@@ -118,7 +136,6 @@ namespace Controle.Controllers
         // POST: Equipamentos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
         public ActionResult DeleteConfirmed(byte id)
         {
             Equipamento equipamento = db.Equipamento.Find(id);

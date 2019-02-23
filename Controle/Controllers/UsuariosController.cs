@@ -19,7 +19,16 @@ namespace Controle.Controllers
         // GET: Usuarios
         public ActionResult Index()
         {
-            return View(db.Usuario.ToList());
+            if (Session["Nome"] != null)
+            {
+                return View(db.Usuario.ToList());
+            }
+            else
+            {
+
+                return RedirectToAction("ErrorLogin", "Home");
+            }
+            
         }
 
         // GET: Usuarios/Details/5
@@ -40,7 +49,15 @@ namespace Controle.Controllers
         // GET: Usuarios/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["Nome"] != null)
+            {
+                return View();
+            }
+            else
+            {
+
+                return RedirectToAction("ErrorLogin", "Home");
+            }
         }
 
         // POST: Usuarios/Create
@@ -50,13 +67,23 @@ namespace Controle.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Nome,Senha,Email,Perfil,Bl_Ativo,RegData")] Usuario usuario)
         {
-            if (ModelState.IsValid)
+            if (Session["Nome"] != null)
             {
-                db.Usuario.Add(usuario);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    usuario.RegData = DateTime.Now;
+                    db.Usuario.Add(usuario);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
+            }
+            else
+            {
+
+                return RedirectToAction("ErrorLogin", "Home");
+            }
+            
             return View(usuario);
         }
 
@@ -84,6 +111,7 @@ namespace Controle.Controllers
         {
             if (ModelState.IsValid)
             {
+                usuario.RegData = DateTime.Now;
                 db.Entry(usuario).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
